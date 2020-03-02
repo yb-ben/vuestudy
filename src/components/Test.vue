@@ -9,20 +9,25 @@
 <template>
   <div id="test">
     <h1 v-on:click="func1">{{ msg | func2 }}</h1>
-   
+
     <input v-model="msg" v-focus>
    <div v-if="seen" v-bind:class="{'class1': c1}">{{ msg }}</div>
     <p>{{ reversedMsg }}</p>
     <p>watch:{{ watchval }}</p>
     <p v-for="i in parentMsg" :key="i">ParentMsg: {{ i }}</p>
-
+    <p>Count:{{ this.$store.state.count }}</p>
+      <p>Count:{{ this.$store.getters.getStateCount }}</p>
+      <button v-on:click="addCount">加一</button>
+      <button v-on:click="reduceCount">减一</button>
   </div>
 </template>
- 
+
 <script>
 
+import {mapState,mapActions,mapGetters} from 'vuex'
+
 export default {
- 
+name:'Test',
   data: function() {
     return {
       msg: "hello,world",
@@ -38,12 +43,18 @@ export default {
   },
   methods:{
       func1:function(){
-        return this.msg = this.msg + '!!!!!!'; 
+        return this.msg = this.msg + '!!!!!!';
+      },
+      addCount:function(){
+          this.$store.dispatch("addFun",2);
+      },
+      reduceCount:function(){
+          this.$store.dispatch("reduction",2);
       }
   },
   filters:{
       func2:function(value){
-     
+
           if(value === '')
             return '';
           return value.charAt(0).toUpperCase() + value.slice(1);

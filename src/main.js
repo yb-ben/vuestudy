@@ -4,7 +4,7 @@ import Test from './components/Test.vue'
 import router from './router'
 import ViewUI from 'view-design'
 import axios from 'axios'
-
+import store from "./store";
 
 Vue.use(ViewUI)
 Vue.prototype.$axios = axios
@@ -25,19 +25,19 @@ Vue.mixin({
     console.log('global mixin function created!!')
   }
 });
-let vm = new Vue({
-  router,
+ new Vue({
+  router,store,
   render: h => h(App),
   mixins:[mixin],
   data:{
     counter:15
   }
 }).$mount('#app');
-
-setInterval(function(){
-  vm.counter += 20;
-},5000)
-vm.$watch('counter',function(nval,oval){
-  console.log('计数器值的变化 :' + oval + ' 变为 ' + nval + '!');
-
-})
+//
+// setInterval(function(){
+//   vm.counter += 20;
+// },5000)
+// vm.$watch('counter',function(nval,oval){
+//   console.log('计数器值的变化 :' + oval + ' 变为 ' + nval + '!');
+//
+// })
