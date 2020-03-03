@@ -3,13 +3,20 @@ import VueRouter from 'vue-router'
 import Home from '../views/Home.vue'
 import Article from '../views/Article.vue'
 
+
 Vue.use(VueRouter)
 
 const routes = [
+  
   {
     path: '/',
     name: 'Home',
     component: Home
+  },
+  {
+    path:'/test',
+    name: 'TestRedirect',
+    redirect: '/about'
   },
   {
     path: '/about',
@@ -23,6 +30,26 @@ const routes = [
     path:'/article',
     name : 'Article',
     component: Article
+  },
+  {
+    path:'/user/:id',
+    component: ()=>import('../views/User.vue'),
+    children:[
+      
+      {
+        path:'profile',
+        component:{
+          template:`<div>profile</div>`
+        }
+      },
+      {
+        path:'posts',
+        component:{
+          template:`<div>posts</div>`
+        }
+      },
+      
+    ]
   }
 ]
 

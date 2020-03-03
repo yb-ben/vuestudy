@@ -31,7 +31,8 @@ Vue.mixin({
   mixins:[mixin],
   data:{
     counter:15
-  }
+  },
+  
 }).$mount('#app');
 //
 // setInterval(function(){

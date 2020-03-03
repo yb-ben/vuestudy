@@ -15,16 +15,15 @@
     <p>{{ reversedMsg }}</p>
     <p>watch:{{ watchval }}</p>
     <p v-for="i in parentMsg" :key="i">ParentMsg: {{ i }}</p>
-    <p>Count:{{ this.$store.state.count }}</p>
-      <p>Count:{{ this.$store.getters.getStateCount }}</p>
-      <button v-on:click="addCount">加一</button>
-      <button v-on:click="reduceCount">减一</button>
+    <p>Count:{{ count1 }}</p>
+      <p>Count:{{ getStateCount }}</p>
+      <button v-on:click="testAddFun(10)">加一</button>
+      <button v-on:click="testReduction(5)">减一</button>
   </div>
 </template>
 
 <script>
-
-import {mapState,mapActions,mapGetters} from 'vuex'
+import{mapState ,mapActions ,mapGetters } from 'vuex';
 
 export default {
 name:'Test',
@@ -45,12 +44,12 @@ name:'Test',
       func1:function(){
         return this.msg = this.msg + '!!!!!!';
       },
-      addCount:function(){
-          this.$store.dispatch("addFun",2);
-      },
-      reduceCount:function(){
-          this.$store.dispatch("reduction",2);
-      }
+
+      ...mapActions('test',{
+        testReduction:'reduction',
+        testAddFun:'addFun'
+      })
+     
   },
   filters:{
       func2:function(value){
@@ -61,6 +60,14 @@ name:'Test',
       }
   },
   computed:{
+      ...mapState('test',{
+        count1 : state=>state.count,
+      }),
+
+      ...mapGetters('test',[
+        'getStateCount'
+      ]),
+
       reversedMsg:function(){
           return this.msg.split('').reverse().join('');
       }
